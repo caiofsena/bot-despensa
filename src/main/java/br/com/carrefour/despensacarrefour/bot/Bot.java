@@ -52,12 +52,13 @@ public class Bot extends TelegramLongPollingBot{
 			sb.append("Bem Vindo ao Bot Despensa Carrefour! Aqui você pode informar os produtos que estão faltando na sua despensa e mostraremos se existem promoções para os produtos.");
 			sb.append("\nFácil assim. Agora me diz, quais produtos estão faltando na sua despensa? Escreva os produtos separados por vígula.");
 			text = sb.toString();
+		} else {
+			List<String> listaProdutosCliente = List.of(mensagem.getText().split(","));
+			List<Produto> listaProdutosEmPromocao = getListaProdutosPromocao(listaProdutosCliente);
+			
+			text = listaProdutosEmPromocao.toString();
 		}
 		
-		List<String> listaProdutosCliente = List.of(mensagem.getText().split(","));
-		List<Produto> listaProdutosEmPromocao = getListaProdutosPromocao(listaProdutosCliente);
-		
-		text = listaProdutosEmPromocao.toString();
 		try {
 			response.setText(text);
 			execute(response);
